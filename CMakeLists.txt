@@ -8,23 +8,36 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-g -ggdb -O0")
 set(CMAKE_VERBOSE_MAKEFILE true)
+set(CMAKE_CXX_EXTENSIONS off)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+# declaretive
+find_package(Qt6 REQUIRED COMPONENTS Qml)
+find_package(Qt6 REQUIRED COMPONENTS QmlIntegration)
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS QuickControls2)
 qt_standard_project_setup()
 
-qt_wrap_ui(UISRCS hello.ui)
+
+# qt_wrap_ui(UISRCS hello.ui)
+
 qt_add_executable(helloworld
-    ${UISRCS}
+    # ${UISRCS}
 
-    mainc.c
+    myitemdg.cpp
+    myview.cpp
+    vlistview.cpp
     maincxx.cpp
-
+    mainc.c
 )
 
-target_link_libraries(helloworld PRIVATE Qt6::Widgets)
+
+target_link_libraries(helloworld PRIVATE Qt6::Widgets Qt6::Qml Qt6::QmlIntegration Qt6::Quick Qt6::QuickControls2)
 
 set_target_properties(helloworld PROPERTIES
     WIN32_EXECUTABLE ON
     MACOSX_BUNDLE ON
+    # QT_QML_ROOT_PATH ""
+    # QT_QML_IMPORT_PATH "~/.nix-profile/lib/qt-6/qml/"
 )
